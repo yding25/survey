@@ -11,3 +11,4 @@ colored(X) :- chosenColour(X,Fv1).
 % No two adjacent nodes have the same colour. 
 :- link(X,Y),  X<Y, chosenColour(X,C), chosenColour(Y,C).
 
+#show chosenColour.
