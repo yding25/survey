@@ -1,0 +1,15 @@
+node(1).
+node(11).
+node(26).
+node(38).
+node(62).
+node(98).
+link(1,62).
+link(62,1).
+link(11,38).
+link(38,11).
+colour(red0).
+colour(green0).
+colour(blue0).
+colour(yellow0).
+colour(cyan0).

@@ -1,0 +1,13 @@
+node(19).
+node(53).
+node(69).
+node(112).
+node(117).
+node(124).
+link(112,117).
+link(117,112).
+colour(red0).
+colour(green0).
+colour(blue0).
+colour(yellow0).
+colour(cyan0).
