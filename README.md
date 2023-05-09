@@ -4,7 +4,7 @@
 
 1,add the api to line 20
 
-2,change "/home/yan/Dropbox/survey" to your local path
+2,change "/home/yan/Dropbox/survey" in asp_gpt4.py to your local path
 
 ## after the perparation is done,do the following steps:
 
