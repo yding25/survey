@@ -17,7 +17,7 @@ Q3: How does performance differ depending on the choice of keywords?
 #@title Customized parameters {display-mode: "form"} 
 
 #@markdown Input openai key for GPT API
-api_key = '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' #@param {type:"string"}
+api_key = '' #@param {type:"string"}
 
 #@title Import third-party packages {display-mode: "form"}
 import numpy as np
@@ -53,7 +53,7 @@ def asp(problem_path, result_path):
 def gpt3(prompt):
   gpt_model = 'text-davinci-003'
   sampling_params = {"n": 1,
-                    "max_tokens": 256,
+                    "max_tokens": 1200,
                     "temperature": 0.0,
                     "top_p": 1,
                     "logprobs": 1,

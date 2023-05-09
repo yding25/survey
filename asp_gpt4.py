@@ -50,36 +50,30 @@ def asp(problem_path, result_path):
   check_file(result_path)
 
 
-def chatgpt(prompt):
-  def chatgpt_basic(messages):
-    gpt_model = 'gpt-3.5-turbo'
-    response = openai.ChatCompletion.create(
-      model=gpt_model,
-      messages = messages,
-      temperature=1)
-    return response['choices'][0]['message']['content']
-  
-  messages = [{"role": "system","content":"You are a smart assistant!"}]
-  try:
-    d = {"role":"user","content":prompt}
-    messages.append(d)
-    # print('Message sent: {}'.format(messages))
-    response = chatgpt_basic(messages)
-    # print('response: {}'.format(response))
-    return response
-  except:
-    print('assistant: something wrong\n')
-    sys.exit()
+def gpt4(prompt):
+  gpt_model = 'gpt-4'
+  sampling_params = {"n": 1,
+                    "max_tokens": 1200,
+                    "temperature": 0.0,
+                    "top_p": 1,
+                    "logprobs": 1,
+                    "presence_penalty": 0,
+                    "frequency_penalty": 0,
+                    "stop": ['\\n']}
+  raw_response = openai.Completion.create(engine=gpt_model, prompt=prompt, **sampling_params)
+  responses = [raw_response['choices'][i]['text'] for i in range(sampling_params['n'])]
+  mean_probs = [math.exp(np.mean(raw_response['choices'][i]['logprobs']['token_logprobs'])) for i in range(sampling_params['n'])]
+  responses = [sample.strip().lower() for sample in responses]
+  return responses[0]
 
-
-def check_colors(links, result_ChatGPT, file_path):
-  node_colors = {node: color for node, color in result_ChatGPT}
+def check_colors(links, result_GPT4, file_path):
+  node_colors = {node: color for node, color in result_GPT4}
   for link in links:
     node1, node2 = link
     try:
       if node_colors[str(node1)] == node_colors[str(node2)]:
         print('nodes {} and {} have the same color.'.format(node1, node2))
-        # print('nodes {} color {}; nodes {} color {}'.format(node1, node_colors[str(node1)], node2, node_colors[str(node2)]))
+        print('nodes {} color {}; nodes {} color {}'.format(node1, node_colors[str(node1)], node2, node_colors[str(node2)]))
         file_path.write('nodes {} and {} have the same color.\n'.format(node1, node2))
         file_path.flush()
         break
@@ -89,7 +83,6 @@ def check_colors(links, result_ChatGPT, file_path):
       file_path.flush()
       sys.exit()
 
-file_path = open('all_results.txt', 'a')
 
 #@title Generate test.lp  {display-mode: "form"}
 #@markdown Enable this module
@@ -153,7 +146,7 @@ if Enable:
       f.writelines(new_content3)
 
 #@title Solve problem using ASP {display-mode: "form"}
-folder_path = '/home/yan/Dropbox/survey/nodes_6/' #@param {type:"string"}
+folder_path = '/home/yan/Dropbox/survey/nodes_20/' #@param {type:"string"}
 
 problem_random = True #@param {type:"boolean"}
 problem_files = os.listdir(folder_path)
@@ -175,7 +168,7 @@ result_path = 'test' #@param {type:"string"}
 if Enable:
   asp(problem_path, result_path)
 
-#@title Solve problem using GPT3 {display-mode: "form"}
+#@title Solve problem using GPT4 {display-mode: "form"}
 Enable = True #@param {type:"boolean"}
 
 if Enable:
@@ -198,43 +191,44 @@ if Enable:
   prompt_question = 'Please solve a graph coloring problem. \
   The goal is to color the nodes of a graph in such a way that no two adjacent nodes have the same color.'
   prompt_color = 'The colors are red0, green0, blue0, yellow0, cyan0.'
-  prompt_note = 'The output format is (node, color).'
+  prompt_note = 'The output format is (node,color).'
   prompt = prompt_question + ' ' + prompt_color + ' ' + prompt_node + ' ' + prompt_link + ' ' + prompt_note
-  print('prompt: {}'.format(prompt))
+  # print('prompt: {}'.format(prompt))
 
-  response_ChatGPT = chatgpt(prompt)
-  # print('response of ChatGPT: \n{}'.format(response_ChatGPT))
+  response_GPT4 = gpt4(prompt)
+  # print('response of GPT-3: \n{}'.format(response_GPT4))
 
-# different regular expression
-temp1 = re.findall(r'\((\d+), (\w+)\)', response_ChatGPT)
-temp2 = re.findall(r'\((\d+),(\w+)\)', response_ChatGPT)
-temp3 = re.findall(r'Node (\d+): (\w+)', response_ChatGPT)
-temp4 = re.findall(r'Node (\d+):(\w+)', response_ChatGPT)
+#@title Check result of GPT4 (solution 1) {display-mode: "form"}
+Enable = False #@param {type:"boolean"}
 
-if len(temp1) !=0:
-  result_ChatGPT = temp1
-  print('select result_ChatGPT1:{}'.format(temp1))
-elif len(temp2) !=0:
-  result_ChatGPT = temp2
-  print('select result_ChatGPT2:{}'.format(temp2))
-elif len(temp3) !=0:
-  result_ChatGPT = temp3
-  print('select result_ChatGPT3:{}'.format(temp3))
-elif len(temp4) !=0:
-  result_ChatGPT = temp4
-  print('select result_ChatGPT4:{}'.format(temp4))
-else:
-  print("!!!All lists are empty.")
-  file_path.write('!!!All lists are empty.\n')
-  file_path.flush()
-  sys.exit()
+if Enable:
+  result_ASP = []
+  with open(result_path, 'r') as file:
+    lines = file.readlines()
+    for line in lines:
+      if 'chosenColour' in line:
+        result_ASP_temp = re.findall(r'chosenColour\((\d+),(\w+)\)', line)
+        result_ASP.append([list(t) for t in result_ASP_temp])
+  # print('result_ASP: {}'.format(result_ASP))
 
+  result_GPT4 = re.findall(r'\((\d+), (\w+)\)', response_GPT4)
+  result_GPT4 = [list(t) for t in result_GPT4]
+  # print('result_GPT4: {}'.format(result_GPT4))
 
-#@title Check result of GPT3 (solution 2) {display-mode: "form"}
+  gpt4_set = set(tuple(element) for element in result_GPT4)
+  for group in result_ASP:
+    asp_set = set(tuple(element) for element in group)
+    if gpt4_set == asp_set:
+      print("result_GPT4 is in result_ASP.")
+      break
+
+#@title Check result of GPT4 (solution 2) {display-mode: "form"}
 Enable = True #@param {type:"boolean"}
 
 if Enable:
-  result_ChatGPT = [list(t) for t in result_ChatGPT]
-  print('result_ChatGPT: {}'.format(result_ChatGPT))
+  result_GPT4 = re.findall(r'\((\d+), (\w+)\)', response_GPT4)
+  result_GPT4 = [list(t) for t in result_GPT4]
+  # print('result_GPT4: {}'.format(result_GPT4))
 
-check_colors(links, result_ChatGPT, file_path)
+file_path = open('all_results.txt', 'a')
+check_colors(links, result_GPT4, file_path)
