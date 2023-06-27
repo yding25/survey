@@ -26,9 +26,13 @@ if ! [[ "$NUMBER_OF_RUNS" =~ ^[0-9]+$ ]]; then
 fi
 
 # 运行Python脚本N次
-for ((i = 1; i <= NUMBER_OF_RUNS; i++)); do
-  echo "运行次数: $i"
-  python3 "$PYTHON_SCRIPT"
+for ((j = 5; j < 51; j += 5)); do
+  echo "Num. of Nodes: $j"
+  echo "-------------nodes $j-------------" >> "all_results.txt"
+  for ((i = 1; i <= NUMBER_OF_RUNS; i++)); do
+    echo "运行次数: $i"
+    python "$PYTHON_SCRIPT" $j
+  done
 done
 
 echo "完成，共运行了 $NUMBER_OF_RUNS 次"

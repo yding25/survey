@@ -14,221 +14,265 @@ Q2: How does performance change when irrelevant information is present?
 Q3: How does performance differ depending on the choice of keywords?
 """
 
-#@title Customized parameters {display-mode: "form"} 
+# @title Customized parameters {display-mode: "form"}
 
-#@markdown Input openai key for GPT API
-api_key = '' #@param {type:"string"}
-
-#@title Import third-party packages {display-mode: "form"}
-import numpy as np
-import openai
-import math
-import os
-import subprocess
-import tempfile
-import json
-import re
-import gc
-import random
-import time
+# @markdown Input openai key for GPT API
 import sys
+import time
+import random
+import gc
+import re
+import json
+import tempfile
+import subprocess
+import os
+import math
+import openai
+import numpy as np
+import dotenv
+import os
+dotenv.load_dotenv()
 
-#@title Utils  {display-mode: "form"}
+# Load your API key from an environment variable or secret management service
+api_key = os.environ.get("OPENAI_KEY")  # @param {type:"string"}
+
+
+# @title Import third-party packages {display-mode: "form"}
+
+# @title Utils  {display-mode: "form"}
 openai.api_key = api_key
 
+
 def check_file(file):
-  if os.path.exists(file):
-    print('{} is generated!'.format(file))
-  else:
-    print('{} is not generated!'.format(file))
+    if os.path.exists(file):
+        print('{} is generated!'.format(file))
+    else:
+        print('{} is not generated!'.format(file))
+
 
 def asp(problem_path, result_path):
-  command = r'clingo /home/yan/Dropbox/survey/graph_colouring.enc.lp %s -n 0 > %s' % (problem_path, result_path)
-  # print('command: {}'.format(command))
-  subprocess.getstatusoutput(command)
-  # check if exist result_path
-  check_file(result_path)
+    command = r'poetry run python -m clingo /home/yhayamizu/llm_asp_survey/graph_colouring.enc.lp %s -n 0 > %s' % (
+        problem_path, result_path)
+    # print('command: {}'.format(command))
+    subprocess.getstatusoutput(command)
+    # check if exist result_path
+    check_file(result_path)
 
 
 def gpt4(prompt):
-  gpt_model = 'gpt-4'
-  sampling_params = {"n": 1,
-                    "max_tokens": 1200,
-                    "temperature": 0.0,
-                    "top_p": 1,
-                    "logprobs": 1,
-                    "presence_penalty": 0,
-                    "frequency_penalty": 0,
-                    "stop": ['\\n']}
-  raw_response = openai.Completion.create(engine=gpt_model, prompt=prompt, **sampling_params)
-  responses = [raw_response['choices'][i]['text'] for i in range(sampling_params['n'])]
-  mean_probs = [math.exp(np.mean(raw_response['choices'][i]['logprobs']['token_logprobs'])) for i in range(sampling_params['n'])]
-  responses = [sample.strip().lower() for sample in responses]
-  return responses[0]
+    def gpt4_basic(messages):
+        gpt_model = 'gpt-4'
+        response = openai.ChatCompletion.create(
+            model=gpt_model,
+            messages=messages,
+            temperature=1)
+        return response['choices'][0]['message']['content']
 
-def check_colors(links, result_GPT4, file_path):
-  node_colors = {node: color for node, color in result_GPT4}
-  for link in links:
-    node1, node2 = link
+    messages = [{"role": "system", "content": "You are a smart assistant!"}]
     try:
-      if node_colors[str(node1)] == node_colors[str(node2)]:
-        print('nodes {} and {} have the same color.'.format(node1, node2))
-        print('nodes {} color {}; nodes {} color {}'.format(node1, node_colors[str(node1)], node2, node_colors[str(node2)]))
-        file_path.write('nodes {} and {} have the same color.\n'.format(node1, node2))
-        file_path.flush()
-        break
+        d = {"role": "user", "content": prompt}
+        messages.append(d)
+        # print('Message sent: {}'.format(messages))
+        response = gpt4_basic(messages)
+        # print('response: {}'.format(response))
+        return response
     except:
-      print('one of nodes {} and {} does not exist.'.format(node1, node2))
-      file_path.write('one of nodes {} and {} does not exist.\n'.format(node1, node2))
-      file_path.flush()
-      sys.exit()
+        print('assistant: something wrong\n')
+        sys.exit()
 
 
-#@title Generate test.lp  {display-mode: "form"}
-#@markdown Enable this module
-Enable = False #@param {type:"boolean"}
+def check_colors(links, result_gpt4, file_path):
+    node_colors = {node: color for node, color in result_gpt4}
+    for link in links:
+        node1, node2 = link
+        try:
+            if node_colors[str(node1)] == node_colors[str(node2)]:
+                print('nodes {} and {} have the same color.'.format(node1, node2))
+                # print('nodes {} color {}; nodes {} color {}'.format(node1, node_colors[str(node1)], node2, node_colors[str(node2)]))
+                file_path.write(
+                    'nodes {} and {} have the same color.\n'.format(node1, node2))
+                file_path.flush()
+                break
+        except:
+            print('one of nodes {} and {} does not exist.'.format(node1, node2))
+            file_path.write(
+                'one of nodes {} and {} does not exist.\n'.format(node1, node2))
+            file_path.flush()
+            sys.exit()
 
-if Enable:
-  #@markdown Repeat M times
-  M = 10 #@param {type:"integer"}
 
-  for item in range(M):
-    with open('/home/yan/Dropbox/survey/1-graph_colouring-125-0.lp', "r") as f:
-      content = f.readlines()
+def run():
 
-    # get node list
-    node_list = []
-    for line in content:
-      if line.startswith("node("):
-        node_num = int(line.split("(")[1].split(")")[0])
-        node_list.append(node_num)
+    # @title Generate test.lp  {display-mode: "form"}
+    # @markdown Enable this module
+    Enable = False  # @param {type:"boolean"}
 
-    # sample N nodes for deletion
-    #@markdown Delete N nodes
-    N = 120 #@param {type:"integer"}
+    if Enable:
+        # @markdown Repeat M times
+        M = 10  # @param {type:"integer"}
 
-    nodes_to_delete = random.sample(node_list, N)
-    print('nodes_to_delete: {}'.format(nodes_to_delete))
+        for item in range(M):
+            with open('/home/yhayamizu/llm_asp_survey/1-graph_colouring-125-0.lp', "r") as f:
+                content = f.readlines()
 
-    # delete nodes
-    new_content1 = []
-    for line in content:
-      if line.startswith("node("):
-        node_num = int(line.split("(")[1].split(")")[0])
-        if node_num not in nodes_to_delete:
-          new_content1.append(line)
-        else:
-          # print('node {} is deleted!'.format(node_num))
-          continue
+            # get node list
+            node_list = []
+            for line in content:
+                if line.startswith("node("):
+                    node_num = int(line.split("(")[1].split(")")[0])
+                    node_list.append(node_num)
 
-    # delete links containing nodes
-    new_content2 = []
-    for line in content:
-        if line.startswith("link("):
-          nodes_in_link = [int(x) for x in line.split("(")[1].split(")")[0].split(",")]
-          if any(node in nodes_to_delete for node in nodes_in_link):
-            continue
-          else:
-            new_content2.append(line)
+            # sample N nodes for deletion
+            # @markdown Delete N nodes
+            N = 120  # @param {type:"integer"}
 
-    # delete nodes
-    new_content3 = []
-    for line in content:
-      if not line.startswith("node(") and not line.startswith("link("):
-        new_content3.append(line)
+            nodes_to_delete = random.sample(node_list, N)
+            print('nodes_to_delete: {}'.format(nodes_to_delete))
 
-    # generate new file
-    current_time = int(time.time() * 100)
-    filename = 'node_' + str(125 - N) + '_' + str(current_time) + '.lp'
-    with open('/home/yan/Dropbox/survey/' + filename, 'w') as f:
-      f.writelines(new_content1)
-      f.writelines(new_content2)
-      f.writelines(new_content3)
+            # delete nodes
+            new_content1 = []
+            for line in content:
+                if line.startswith("node("):
+                    node_num = int(line.split("(")[1].split(")")[0])
+                    if node_num not in nodes_to_delete:
+                        new_content1.append(line)
+                    else:
+                        # print('node {} is deleted!'.format(node_num))
+                        continue
 
-#@title Solve problem using ASP {display-mode: "form"}
-folder_path = '/home/yan/Dropbox/survey/nodes_20/' #@param {type:"string"}
+            # delete links containing nodes
+            new_content2 = []
+            for line in content:
+                if line.startswith("link("):
+                    nodes_in_link = [int(x) for x in line.split(
+                        "(")[1].split(")")[0].split(",")]
+                    if any(node in nodes_to_delete for node in nodes_in_link):
+                        continue
+                    else:
+                        new_content2.append(line)
 
-problem_random = True #@param {type:"boolean"}
-problem_files = os.listdir(folder_path)
-if  problem_random:
-  if problem_files:
+            # delete nodes
+            new_content3 = []
+            for line in content:
+                if not line.startswith("node(") and not line.startswith("link("):
+                    new_content3.append(line)
+
+            # generate new file
+            current_time = int(time.time() * 100)
+            filename = 'node_' + str(125 - N) + '_' + str(current_time) + '.lp'
+            with open('/home/yhayamizu/llm_asp_survey/' + filename, 'w') as f:
+                f.writelines(new_content1)
+                f.writelines(new_content2)
+                f.writelines(new_content3)
+
+    # @title Solve problem using ASP {display-mode: "form"}
+    # @param {type:"string"}
+    folder_path = f'/home/yhayamizu/llm_asp_survey/nodes_{sys.argv[1]}/'
+    problem_files = os.listdir(folder_path)
     random_problem = random.choice(problem_files)
-    problem_path = folder_path + random_problem
+    problem_path = os.path.join(folder_path, random_problem)
     print('problem path: {}'.format(problem_path))
-  else:
-    print('No files found in {}.'.format(folder_path))
-else:
-  problem = 'node_5_168297541905.lp' #@param {type:"string"}
-  problem_path = folder_path + problem
-  print('problem path: {}'.format(problem_path))
 
-Enable = False #@param {type:"boolean"}
-result_path = 'test' #@param {type:"string"}
+    # problem_random = True  # @param {type:"boolean"}
+    # problem_files = os.listdir(folder_path)
+    # if problem_random:
+    #     if problem_files:
+    #         random_problem = random.choice(problem_files)
+    #         problem_path = folder_path + random_problem
+    #         print('problem path: {}'.format(problem_path))
+    #     else:
+    #         print('No files found in {}.'.format(folder_path))
+    # else:
+    #     problem = 'node_5_168297541905.lp'  # @param {type:"string"}
+    #     problem_path = folder_path + problem
+    #     print('problem path: {}'.format(problem_path))
+
+    Enable = False  # @param {type:"boolean"}
+    result_path = 'test'  # @param {type:"string"}
+
+    if Enable:
+        asp(problem_path, result_path)
+
+    # @title Solve problem using GPT3 {display-mode: "form"}
+    Enable = True  # @param {type:"boolean"}
+
+    if Enable:
+        #     # translate problem into natural language
+        #     with open(problem_path, 'r') as file:
+        #         lines = file.read()
+        #     file.close()
+        #     nodes = re.findall(r'node\((\d+)\)\.', lines)
+        #     nodes = [x for x in nodes]
+        #     nodes = ', '.join([x for x in nodes])
+        #     prompt_node = 'The nodes are {}.'.format(nodes)
+
+        #     with open(problem_path, 'r') as file:
+        #         lines = file.read()
+        #     file.close()
+        #     links = re.findall(r'link\((\d+),(\d+)\)', lines)
+        #     links = [[int(x[0]), int(x[1])] for x in links]
+        #     prompt_link = ' '.join(
+        #         [f'Nodes {x[0]} and {x[1]} are linked.'for x in links])
+
+        #     prompt_question = 'Please solve a graph coloring problem. \
+        # The goal is to color the nodes of a graph in such a way that no two adjacent nodes have the same color.'
+        #     prompt_color = 'The colors are red0, green0, blue0, yellow0, cyan0.'
+        #     prompt_note = 'The output format is (node, color).'
+        #     prompt = prompt_question + ' ' + prompt_color + ' ' + \
+        #         prompt_node + ' ' + prompt_link + ' ' + prompt_note
+        #     print('prompt: {}'.format(prompt))
+        from prompt_generator import generate_prompt
+        with open(problem_path, 'r') as file:
+            lines = file.read()
+        prompt = generate_prompt(lines)
+        print('prompt: {}'.format(prompt))
+        response_gpt4 = gpt4(prompt)
+        print('response of gpt4: \n{}'.format(response_gpt4))
+
+    # different regular expression
+    temp1 = re.findall(r'\((\d+), (\w+)\)', response_gpt4)
+    temp2 = re.findall(r'\((\d+),(\w+)\)', response_gpt4)
+    temp3 = re.findall(r'Node (\d+): (\w+)', response_gpt4)
+    temp4 = re.findall(r'Node (\d+):(\w+)', response_gpt4)
+
+    if len(temp1) != 0:
+        result_gpt4 = temp1
+        print('select result_gpt41:{}'.format(temp1))
+    elif len(temp2) != 0:
+        result_gpt4 = temp2
+        print('select result_gpt42:{}'.format(temp2))
+    elif len(temp3) != 0:
+        result_gpt4 = temp3
+        print('select result_gpt43:{}'.format(temp3))
+    elif len(temp4) != 0:
+        result_gpt4 = temp4
+        print('select result_gpt44:{}'.format(temp4))
+    else:
+        result_gpt4 = []
+        print("!!!All lists are empty.")
+        # file_path.write('!!!All lists are empty.\n')
+        # file_path.flush()
+        # sys.exit()
+    return problem_path, result_gpt4
+
+
+result_gpt4 = []
+problem_path = None
+while result_gpt4 == []:
+    problem_path, result_gpt4 = run()
+
+
+# @title Check result of GPT3 (solution 2) {display-mode: "form"}
+Enable = True  # @param {type:"boolean"}
 
 if Enable:
-  asp(problem_path, result_path)
+    result_gpt4 = [list(t) for t in result_gpt4]
+    print('result_gpt4: {}'.format(result_gpt4))
 
-#@title Solve problem using GPT4 {display-mode: "form"}
-Enable = True #@param {type:"boolean"}
-
-if Enable:
-  # translate problem into natural language
-  with open(problem_path, 'r') as file:
-    lines = file.read()
-  file.close()
-  nodes = re.findall(r'node\((\d+)\)\.', lines)
-  nodes = [x for x in nodes]
-  nodes = ', '.join([x for x in nodes])
-  prompt_node = 'The nodes are {}.'.format(nodes)
-
-  with open(problem_path, 'r') as file:
-    lines = file.read()
-  file.close()
-  links = re.findall(r'link\((\d+),(\d+)\)', lines)
-  links = [[int(x[0]), int(x[1])] for x in links]
-  prompt_link = ' '.join([f'Nodes {x[0]} and {x[1]} are linked.'for x in links])
-
-  prompt_question = 'Please solve a graph coloring problem. \
-  The goal is to color the nodes of a graph in such a way that no two adjacent nodes have the same color.'
-  prompt_color = 'The colors are red0, green0, blue0, yellow0, cyan0.'
-  prompt_note = 'The output format is (node,color).'
-  prompt = prompt_question + ' ' + prompt_color + ' ' + prompt_node + ' ' + prompt_link + ' ' + prompt_note
-  # print('prompt: {}'.format(prompt))
-
-  response_GPT4 = gpt4(prompt)
-  # print('response of GPT-3: \n{}'.format(response_GPT4))
-
-#@title Check result of GPT4 (solution 1) {display-mode: "form"}
-Enable = False #@param {type:"boolean"}
-
-if Enable:
-  result_ASP = []
-  with open(result_path, 'r') as file:
-    lines = file.readlines()
-    for line in lines:
-      if 'chosenColour' in line:
-        result_ASP_temp = re.findall(r'chosenColour\((\d+),(\w+)\)', line)
-        result_ASP.append([list(t) for t in result_ASP_temp])
-  # print('result_ASP: {}'.format(result_ASP))
-
-  result_GPT4 = re.findall(r'\((\d+), (\w+)\)', response_GPT4)
-  result_GPT4 = [list(t) for t in result_GPT4]
-  # print('result_GPT4: {}'.format(result_GPT4))
-
-  gpt4_set = set(tuple(element) for element in result_GPT4)
-  for group in result_ASP:
-    asp_set = set(tuple(element) for element in group)
-    if gpt4_set == asp_set:
-      print("result_GPT4 is in result_ASP.")
-      break
-
-#@title Check result of GPT4 (solution 2) {display-mode: "form"}
-Enable = True #@param {type:"boolean"}
-
-if Enable:
-  result_GPT4 = re.findall(r'\((\d+), (\w+)\)', response_GPT4)
-  result_GPT4 = [list(t) for t in result_GPT4]
-  # print('result_GPT4: {}'.format(result_GPT4))
 
 file_path = open('all_results.txt', 'a')
-check_colors(links, result_GPT4, file_path)
+with open(problem_path, 'r') as file:
+    lines = file.read()
+links = re.findall(r'link\((\d+),(\d+)\)', lines)
+links = [[int(x[0]), int(x[1])] for x in links]
+check_colors(links, result_gpt4, file_path)

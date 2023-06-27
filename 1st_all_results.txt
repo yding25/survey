@@ -1,0 +1,369 @@
+-------------nodes 20-------------
+nodes 17 and 49 have the same color.
+nodes 50 and 72 have the same color.
+nodes 70 and 96 have the same color.
+nodes 14 and 89 have the same color.
+nodes 55 and 115 have the same color.
+nodes 25 and 92 have the same color.
+nodes 50 and 51 have the same color.
+nodes 42 and 119 have the same color.
+nodes 25 and 52 have the same color.
+nodes 17 and 49 have the same color.
+!!!All lists are empty.
+nodes 28 and 34 have the same color.
+nodes 22 and 90 have the same color.
+nodes 1 and 108 have the same color.
+nodes 48 and 68 have the same color.
+nodes 17 and 49 have the same color.
+nodes 28 and 34 have the same color.
+nodes 4 and 15 have the same color.
+one of nodes 4 and 63 does not exist.
+nodes 13 and 41 have the same color.
+nodes 17 and 49 have the same color.
+nodes 13 and 27 have the same color.
+nodes 25 and 52 have the same color.
+nodes 45 and 101 have the same color.
+nodes 72 and 76 have the same color.
+nodes 102 and 122 have the same color.
+-------------nodes 5-------------
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+!!!All lists are empty.
+-------------nodes 10-------------
+nodes 115 and 122 have the same color.
+nodes 110 and 111 have the same color.
+nodes 1 and 108 have the same color.
+-------------nodes 15-------------
+nodes 50 and 52 have the same color.
+nodes 105 and 109 have the same color.
+nodes 29 and 92 have the same color.
+nodes 92 and 102 have the same color.
+nodes 55 and 82 have the same color.
+nodes 59 and 124 have the same color.
+nodes 88 and 105 have the same color.
+nodes 11 and 67 have the same color.
+nodes 29 and 108 have the same color.
+nodes 115 and 122 have the same color.
+nodes 75 and 78 have the same color.
+nodes 88 and 105 have the same color.
+nodes 88 and 105 have the same color.
+nodes 59 and 124 have the same color.
+nodes 24 and 52 have the same color.
+nodes 50 and 119 have the same color.
+nodes 52 and 103 have the same color.
+nodes 4 and 70 have the same color.
+nodes 15 and 90 have the same color.
+-------------nodes 25-------------
+nodes 12 and 20 have the same color.
+nodes 30 and 106 have the same color.
+nodes 18 and 49 have the same color.
+nodes 12 and 20 have the same color.
+nodes 48 and 61 have the same color.
+nodes 41 and 108 have the same color.
+nodes 31 and 36 have the same color.
+nodes 5 and 74 have the same color.
+nodes 31 and 36 have the same color.
+nodes 25 and 67 have the same color.
+nodes 28 and 34 have the same color.
+one of nodes 7 and 95 does not exist.
+nodes 18 and 49 have the same color.
+nodes 35 and 109 have the same color.
+nodes 27 and 108 have the same color.
+nodes 17 and 45 have the same color.
+nodes 23 and 121 have the same color.
+one of nodes 32 and 33 does not exist.
+nodes 60 and 64 have the same color.
+nodes 18 and 49 have the same color.
+nodes 87 and 118 have the same color.
+nodes 88 and 96 have the same color.
+nodes 51 and 101 have the same color.
+nodes 48 and 84 have the same color.
+nodes 28 and 34 have the same color.
+nodes 25 and 125 have the same color.
+nodes 27 and 108 have the same color.
+nodes 25 and 92 have the same color.
+nodes 50 and 92 have the same color.
+nodes 41 and 61 have the same color.
+nodes 15 and 118 have the same color.
+one of nodes 14 and 72 does not exist.
+nodes 15 and 40 have the same color.
+nodes 28 and 89 have the same color.
+nodes 37 and 96 have the same color.
+nodes 23 and 46 have the same color.
+nodes 39 and 61 have the same color.
+nodes 23 and 74 have the same color.
+-------------nodes 30-------------
+nodes 16 and 67 have the same color.
+nodes 15 and 96 have the same color.
+nodes 3 and 94 have the same color.
+nodes 53 and 70 have the same color.
+nodes 28 and 33 have the same color.
+nodes 42 and 119 have the same color.
+nodes 29 and 97 have the same color.
+nodes 8 and 117 have the same color.
+nodes 18 and 71 have the same color.
+nodes 31 and 70 have the same color.
+nodes 12 and 112 have the same color.
+nodes 50 and 72 have the same color.
+nodes 24 and 99 have the same color.
+nodes 11 and 20 have the same color.
+nodes 53 and 70 have the same color.
+nodes 33 and 97 have the same color.
+nodes 29 and 43 have the same color.
+nodes 44 and 106 have the same color.
+nodes 18 and 34 have the same color.
+nodes 14 and 114 have the same color.
+nodes 18 and 81 have the same color.
+nodes 23 and 110 have the same color.
+nodes 49 and 94 have the same color.
+nodes 18 and 71 have the same color.
+nodes 16 and 67 have the same color.
+nodes 21 and 80 have the same color.
+nodes 23 and 121 have the same color.
+nodes 8 and 117 have the same color.
+nodes 8 and 23 have the same color.
+nodes 23 and 121 have the same color.
+nodes 8 and 115 have the same color.
+nodes 27 and 92 have the same color.
+nodes 29 and 51 have the same color.
+nodes 12 and 112 have the same color.
+nodes 18 and 34 have the same color.
+nodes 10 and 111 have the same color.
+nodes 19 and 78 have the same color.
+nodes 14 and 72 have the same color.
+nodes 31 and 87 have the same color.
+nodes 14 and 72 have the same color.
+nodes 27 and 88 have the same color.
+nodes 54 and 88 have the same color.
+nodes 21 and 31 have the same color.
+nodes 23 and 121 have the same color.
+nodes 23 and 50 have the same color.
+nodes 19 and 102 have the same color.
+nodes 21 and 34 have the same color.
+-------------nodes 35-------------
+nodes 14 and 87 have the same color.
+nodes 16 and 37 have the same color.
+nodes 11 and 112 have the same color.
+nodes 5 and 88 have the same color.
+nodes 21 and 34 have the same color.
+nodes 5 and 39 have the same color.
+nodes 45 and 87 have the same color.
+nodes 21 and 31 have the same color.
+nodes 14 and 48 have the same color.
+nodes 6 and 102 have the same color.
+nodes 16 and 37 have the same color.
+one of nodes 7 and 125 does not exist.
+nodes 6 and 120 have the same color.
+nodes 20 and 76 have the same color.
+nodes 23 and 110 have the same color.
+nodes 2 and 82 have the same color.
+nodes 24 and 112 have the same color.
+nodes 16 and 67 have the same color.
+nodes 45 and 87 have the same color.
+nodes 45 and 87 have the same color.
+nodes 25 and 41 have the same color.
+nodes 6 and 68 have the same color.
+nodes 18 and 119 have the same color.
+nodes 7 and 60 have the same color.
+nodes 5 and 88 have the same color.
+nodes 11 and 38 have the same color.
+nodes 28 and 93 have the same color.
+nodes 5 and 39 have the same color.
+nodes 23 and 110 have the same color.
+nodes 34 and 62 have the same color.
+nodes 34 and 62 have the same color.
+nodes 6 and 61 have the same color.
+nodes 30 and 118 have the same color.
+nodes 40 and 116 have the same color.
+nodes 18 and 119 have the same color.
+nodes 8 and 115 have the same color.
+nodes 20 and 94 have the same color.
+nodes 38 and 52 have the same color.
+nodes 45 and 56 have the same color.
+nodes 2 and 51 have the same color.
+nodes 6 and 120 have the same color.
+nodes 1 and 77 have the same color.
+nodes 7 and 60 have the same color.
+nodes 35 and 94 have the same color.
+nodes 6 and 68 have the same color.
+nodes 17 and 29 have the same color.
+nodes 29 and 92 have the same color.
+nodes 7 and 60 have the same color.
+nodes 5 and 18 have the same color.
+-------------nodes 40-------------
+nodes 47 and 111 have the same color.
+nodes 5 and 74 have the same color.
+nodes 5 and 39 have the same color.
+nodes 4 and 97 have the same color.
+one of nodes 23 and 46 does not exist.
+nodes 5 and 56 have the same color.
+nodes 5 and 29 have the same color.
+nodes 10 and 49 have the same color.
+nodes 11 and 38 have the same color.
+nodes 16 and 67 have the same color.
+nodes 15 and 40 have the same color.
+nodes 15 and 96 have the same color.
+nodes 3 and 42 have the same color.
+nodes 8 and 23 have the same color.
+nodes 20 and 60 have the same color.
+nodes 4 and 66 have the same color.
+nodes 42 and 119 have the same color.
+nodes 23 and 27 have the same color.
+nodes 6 and 77 have the same color.
+nodes 26 and 114 have the same color.
+nodes 18 and 78 have the same color.
+nodes 30 and 106 have the same color.
+nodes 18 and 86 have the same color.
+nodes 11 and 38 have the same color.
+nodes 5 and 74 have the same color.
+nodes 17 and 81 have the same color.
+nodes 43 and 74 have the same color.
+nodes 14 and 62 have the same color.
+nodes 11 and 68 have the same color.
+nodes 5 and 105 have the same color.
+nodes 6 and 104 have the same color.
+nodes 6 and 77 have the same color.
+nodes 11 and 38 have the same color.
+nodes 12 and 101 have the same color.
+nodes 7 and 90 have the same color.
+nodes 6 and 77 have the same color.
+one of nodes 2 and 78 does not exist.
+nodes 17 and 112 have the same color.
+nodes 23 and 110 have the same color.
+nodes 15 and 83 have the same color.
+nodes 30 and 106 have the same color.
+nodes 11 and 123 have the same color.
+nodes 6 and 77 have the same color.
+nodes 7 and 125 have the same color.
+-------------nodes 45-------------
+nodes 1 and 96 have the same color.
+nodes 3 and 6 have the same color.
+nodes 11 and 123 have the same color.
+nodes 1 and 17 have the same color.
+nodes 12 and 55 have the same color.
+nodes 5 and 37 have the same color.
+one of nodes 3 and 15 does not exist.
+nodes 21 and 119 have the same color.
+nodes 2 and 30 have the same color.
+nodes 19 and 102 have the same color.
+one of nodes 2 and 49 does not exist.
+nodes 2 and 109 have the same color.
+nodes 7 and 60 have the same color.
+one of nodes 23 and 50 does not exist.
+nodes 5 and 124 have the same color.
+nodes 7 and 60 have the same color.
+nodes 25 and 37 have the same color.
+nodes 8 and 103 have the same color.
+nodes 5 and 87 have the same color.
+nodes 23 and 50 have the same color.
+nodes 6 and 77 have the same color.
+nodes 10 and 72 have the same color.
+nodes 7 and 104 have the same color.
+nodes 27 and 92 have the same color.
+nodes 13 and 48 have the same color.
+nodes 5 and 87 have the same color.
+nodes 7 and 70 have the same color.
+nodes 1 and 70 have the same color.
+nodes 25 and 37 have the same color.
+nodes 6 and 99 have the same color.
+nodes 8 and 103 have the same color.
+nodes 2 and 49 have the same color.
+nodes 5 and 37 have the same color.
+nodes 2 and 51 have the same color.
+nodes 22 and 83 have the same color.
+nodes 6 and 99 have the same color.
+nodes 8 and 103 have the same color.
+nodes 3 and 6 have the same color.
+nodes 25 and 37 have the same color.
+nodes 5 and 37 have the same color.
+nodes 7 and 95 have the same color.
+nodes 2 and 49 have the same color.
+nodes 5 and 87 have the same color.
+nodes 25 and 37 have the same color.
+nodes 12 and 47 have the same color.
+nodes 17 and 98 have the same color.
+nodes 6 and 104 have the same color.
+nodes 18 and 34 have the same color.
+nodes 10 and 111 have the same color.
+nodes 13 and 31 have the same color.
+-------------nodes 50-------------
+nodes 1 and 93 have the same color.
+nodes 1 and 70 have the same color.
+nodes 5 and 18 have the same color.
+nodes 8 and 23 have the same color.
+nodes 4 and 63 have the same color.
+nodes 3 and 94 have the same color.
+nodes 15 and 90 have the same color.
+nodes 7 and 66 have the same color.
+nodes 5 and 18 have the same color.
+nodes 1 and 25 have the same color.
+nodes 8 and 23 have the same color.
+nodes 14 and 89 have the same color.
+nodes 4 and 70 have the same color.
+nodes 3 and 15 have the same color.
+nodes 6 and 120 have the same color.
+nodes 5 and 18 have the same color.
+nodes 3 and 5 have the same color.
+nodes 4 and 66 have the same color.
+nodes 3 and 102 have the same color.
+nodes 3 and 86 have the same color.
+nodes 5 and 18 have the same color.
+nodes 1 and 39 have the same color.
+nodes 3 and 40 have the same color.
+nodes 1 and 39 have the same color.
+nodes 4 and 63 have the same color.
+nodes 4 and 66 have the same color.
+nodes 12 and 47 have the same color.
+nodes 6 and 61 have the same color.
+nodes 5 and 76 have the same color.
+nodes 3 and 86 have the same color.
+nodes 15 and 118 have the same color.
+nodes 8 and 102 have the same color.
+nodes 19 and 103 have the same color.
+one of nodes 4 and 15 does not exist.
+nodes 3 and 5 have the same color.
+nodes 16 and 66 have the same color.
+nodes 5 and 76 have the same color.
+nodes 8 and 23 have the same color.
+nodes 15 and 40 have the same color.
+nodes 1 and 103 have the same color.
+nodes 3 and 94 have the same color.
+nodes 4 and 66 have the same color.
+nodes 10 and 119 have the same color.
+nodes 6 and 77 have the same color.
+nodes 8 and 23 have the same color.
+nodes 15 and 40 have the same color.
